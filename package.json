@@ -24,7 +24,7 @@
   "homepage": "https://github.com/rsmith-63/EutilsServer#readme",
   "dependencies": {
     "bluebird": "^3.4.7",
-    "koa": "^1.2.4",
+    "koa": "^2.0.0-alpha.7",
     "koa-bodyparser": "^2.3.0",
     "koa-compress": "^1.0.9",
     "koa-convert": "^1.2.0",
@@ -40,6 +40,7 @@
     "node-uuid": "^1.4.7",
     "pug": "^2.0.0-beta7",
     "rc": "^1.1.6",
+    "winston": "^2.3.1",
     "winston-config": "^0.5.1",
     "winston-koa-logger": "0.0.2",
     "xml2js": "^0.4.17"
