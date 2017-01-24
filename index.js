@@ -21,7 +21,7 @@ const configuration = require("./config/config")
 
 log.debug("Configuration", configuration);
 
-var app = koa();
+var app = new koa();
 
 
 //Centralized Error handler
