@@ -3,7 +3,10 @@
  */
 "use strict";
 
-const router = require('koa-router')(), fs = require("fs"), path = require("path"), _ = require("lodash");
+const router = require('koa-router')(),
+    fs = require("fs"),
+    path = require("path"),
+    _ = require("lodash");
 //Set up router
 
 
