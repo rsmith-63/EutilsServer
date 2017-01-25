@@ -18,8 +18,8 @@ pids
 node_modules
 
 
-.tmp
-.swp
-.iml
+*.tmp
+*.swp
+*.iml
 
 

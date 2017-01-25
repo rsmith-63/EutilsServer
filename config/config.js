@@ -20,8 +20,7 @@ const configs = {
     //Development configuration.
     "development": {
         PORT: 3000,				//port to run the server on
-        //In dev mode, we redirect to the webpack dev server
-        HOST: "http://localhost:8080",		//hostname of the server. Used to determine where the app redirects to after successful LTI authorization
+        HOST: "localhost:3000",
         OAUTH_KEY: "key",		//Set these in a configuration file in production.
         OAUTH_SECRET: "secret",
         LOG_MAX_FILE_SIZE: 20971520, // 20 Meg
