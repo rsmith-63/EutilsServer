@@ -12,7 +12,7 @@ const router = require('koa-router')(),
 
 
 //Add routes to handle our API requests so far, using fake data
-router.get("/pubMed", function *(ctx){
+router.get("/api/pubMed", function *(ctx){
     this.body = { test:"test only"};
     this.type = "application/json";
 
