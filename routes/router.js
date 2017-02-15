@@ -177,33 +177,7 @@ router.get("/api/test/elink", function *(ctx){
     this.type = "application/json";
 
 });
-/*
- Required Parameters
- db
- Database to search. The only supported value is ‘pubmed’.
- rettype
- Retrieval type. The only supported value is ‘xml’.
- bdata
- Citation strings. Each input citation must be represented by a citation string in the following format:
- journal_title|year|volume|first_page|author_name|your_key|
- Multiple citation strings may be provided by separating the strings with a carriage return character (%0D).
- The your_key value is an arbitrary label provided by the user that may serve as a local identifier for the citation,
- and it will be included in the output. Be aware that all spaces must be replaced by ‘+’
- symbols and that citation strings should end with a final vertical bar ‘|’.
- */
 
-router.get("/api/test/ecitmatch", function *(ctx){
-    //https://eutils.ncbi.nlm.nih.gov/entrez/eutils/einfo.fcgi?retmode=json&
-
-    let ncbiReq = new ncbiProvider(requestOptions);
-    let queryString = url.parse(this.url,true);
-    let queryBody = queryString.query;
-    let result =  yield ncbiReq.ecitmatch(queryBody);
-
-    this.body = result;
-    this.type = "application/json";
-
-});
 /*
  Required Parameters
  db
@@ -226,5 +200,35 @@ router.get("/api/test/espell", function *(ctx){
     this.type = "application/json";
 
 });
+
+/*
+ Required Parameters
+ db
+ Database to search. The only supported value is ‘pubmed’.
+ rettype
+ Retrieval type. The only supported value is ‘xml’.
+ bdata
+ Citation strings. Each input citation must be represented by a citation string in the following format:
+ journal_title|year|volume|first_page|author_name|your_key|
+ Multiple citation strings may be provided by separating the strings with a carriage return character (%0D).
+ The your_key value is an arbitrary label provided by the user that may serve as a local identifier for the citation,
+ and it will be included in the output. Be aware that all spaces must be replaced by ‘+’
+ symbols and that citation strings should end with a final vertical bar ‘|’.
+ */
+
+router.get("/api/test/ecitmatch", function *(ctx){
+
+    // this api is not returning proper xml
+
+    let ncbiReq = new ncbiProvider(requestOptions);
+    let queryString = url.parse(this.url,true);
+    let queryBody = queryString.query;
+    let result =  yield ncbiReq.ecitmatch(queryBody);
+
+    this.body = result;
+    this.type = "application/xml";
+
+});
+
 
 module.exports = router;

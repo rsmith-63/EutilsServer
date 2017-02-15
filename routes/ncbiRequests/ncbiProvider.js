@@ -187,16 +187,11 @@ class NCBIProvider {
  */
     *ecitmatch(queryBody) {
 
-
         let  options = _.cloneDeep(this.options);
-        options.url=`${options.url}ecitmatch.fcgi?retmode=xml&usehistory=y&bdata=${queryBody.bdata}&db=${queryBody.db}`;
+        options.url=`${options.url}ecitmatch.cgi?&db=${queryBody.db}&retmode=xml&bdata=${queryBody.bdata}`;
         let response = yield request(options);
-
-
-        let jsonResponce = yield transformToJson(response.body);
-
-
-        return jsonResponce;
+        // this api is not returning proper xml
+        return response.body;
     }
 /*
  Provides spelling suggestions for terms within a single text query in a given database.
