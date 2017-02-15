@@ -12,6 +12,7 @@ const rc = require("rc")
     , appName = "EutilsServer"
     , _ = require("lodash")
     , NcbiConfiguration = require("./ncbi/ncbi-mappings")[env].NcbiAPI
+    , RequestOptions = require("./ncbi/ncbi-mappings")[env].RequestOptions
     ;
 
 
@@ -19,8 +20,8 @@ const rc = require("rc")
 const configs = {
     //Development configuration.
     "development": {
-        PORT: 3000,				//port to run the server on
-        HOST: "localhost:3000",
+        PORT: 4000,				//port to run the server on
+        HOST: "localhost:4000",
         OAUTH_KEY: "key",		//Set these in a configuration file in production.
         OAUTH_SECRET: "secret",
         LOG_MAX_FILE_SIZE: 20971520, // 20 Meg
@@ -45,7 +46,7 @@ if(config = configs[env]) {
     //Copy out this property, because we're about to replace the whole object
     let useNcbiAPI = _.get(config, "NCBI.USE_NCBI_API", false);
     config.NCBI = _.cloneDeep(NcbiConfiguration);
-
+    config.requestOptions = _.cloneDeep(RequestOptions);
     //Copy the property back
     config.NCBI.USE_NCBI_API = useNcbiAPI;
 

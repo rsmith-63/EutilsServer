@@ -6,9 +6,11 @@ const configuration = require("./config/config")
     , path = require("path")
     , koa = require('koa')
     , staticPath = path.join(__dirname, "..", "client")
+    , templatePath = path.join(__dirname, "..", "static-templates")
     , serve = require("koa-static")
     , port = process.env.PORT || configuration.PORT
-    , fs = require("fs")
+    , P = require("bluebird")
+    , fs = P.promisifyAll(require("fs"))
     , compress = require('koa-compress')
     , router = require("./routes/router.js")
     , bodyParser = require('koa-bodyparser')
@@ -16,9 +18,8 @@ const configuration = require("./config/config")
     , mount = require('koa-mount')
     , convert = require('koa-convert')
     , logger = require("koa-logger")
-    ,pug = require("pug")
+    ,  pug = require('pug')
     ;
-
 log.debug("Configuration", configuration);
 
 var app = new koa();
