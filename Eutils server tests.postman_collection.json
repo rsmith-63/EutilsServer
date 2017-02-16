@@ -1,0 +1,121 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Eutils server tests",
+		"_postman_id": "b69cb137-85fb-0a5e-7758-a81b45de3f8a",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://LOCALHOST:4000/api/query",
+			"request": {
+				"url": "http://LOCALHOST:4000/api/query?term=polio",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Eutils server tests"
+			},
+			"response": []
+		},
+		{
+			"name": "http://LOCALHOST:4000/api/dblist",
+			"request": {
+				"url": "http://LOCALHOST:4000/api/dblist",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Eutils server tests"
+			},
+			"response": []
+		},
+		{
+			"name": "http://LOCALHOST:4000/api/status",
+			"request": {
+				"url": "http://LOCALHOST:4000/api/pubMed",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Eutils server tests"
+			},
+			"response": []
+		},
+		{
+			"name": "http://LOCALHOST:4000/api/test/einfo",
+			"request": {
+				"url": "http://LOCALHOST:4000/api/test/einfo/?term=gene",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Eutils server tests"
+			},
+			"response": []
+		},
+		{
+			"name": "http://LOCALHOST:4000/api/test/esearch",
+			"request": {
+				"url": "http://LOCALHOST:4000/api/test/esearch/?term=tf[sym] AND human[orgn]&db=gene",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Eutils server tests"
+			},
+			"response": []
+		},
+		{
+			"name": "http://LOCALHOST:4000/api/test/esummary",
+			"request": {
+				"url": "http://LOCALHOST:4000/api/test/esummary/?db=protein&id=15718680,157427902,119703751",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Eutils server tests"
+			},
+			"response": []
+		},
+		{
+			"name": "http://LOCALHOST:4000/api/test/efetch",
+			"request": {
+				"url": "http://LOCALHOST:4000/api/test/efetch/?db=protein&id=15718680,157427902,119703751",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Eutils server tests"
+			},
+			"response": []
+		},
+		{
+			"name": "http://LOCALHOST:4000/api/test/elink",
+			"request": {
+				"url": "http://LOCALHOST:4000/api/test/elink/?dbfrom=protein&db=gene&id=15718680,157427902",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Eutils server tests"
+			},
+			"response": []
+		},
+		{
+			"name": "http://LOCALHOST:4000/api/test/espell",
+			"request": {
+				"url": "http://LOCALHOST:4000/api/test/espell/?db=pubmed&term=asthmaa+OR+alergies",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Eutils server tests"
+			},
+			"response": []
+		},
+		{
+			"name": "http://LOCALHOST:4000/api/test/ecitmatch",
+			"request": {
+				"url": "http://LOCALHOST:4000/api/test/ecitmatch/db=pubmed&bdata=proc+natl+acad+sci+u+s+a|1991|88|3248|mann+bj|Art1|%0Dscience|1987|235|182|palmenberg+ac|Art2|",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Eutils server tests"
+			},
+			"response": []
+		}
+	]
+}
