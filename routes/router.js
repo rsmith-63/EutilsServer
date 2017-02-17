@@ -38,7 +38,8 @@ router.get("/api/dblist", function *(ctx){
 
 
      let response = yield request(options);
-    this.body = response.body
+     let res = JSON.parse(response.body)
+    this.body = res.einforesult.dblist;
     this.type = "application/json";
 
 });
