@@ -19,11 +19,13 @@ const configuration = require("./config/config")
     , convert = require('koa-convert')
     , logger = require("koa-logger")
     ,  pug = require('pug')
-    ;
+    ,  cors = require('kcors');
+
+;
 log.debug("Configuration", configuration);
 
 var app = new koa();
-
+    app.use(cors());
 
 //Centralized Error handler
 function *errorHandler (next){

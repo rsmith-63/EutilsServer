@@ -24,6 +24,7 @@
   "homepage": "https://github.com/rsmith-63/EutilsServer#readme",
   "dependencies": {
     "bluebird": "^3.4.7",
+    "kcors": "^1.3.2",
     "koa": "^1.2.0",
     "koa-bodyparser": "^2.0.1",
     "koa-compress": "^1.0.9",
