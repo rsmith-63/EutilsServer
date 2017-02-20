@@ -73,7 +73,7 @@ class NCBIProvider {
          let response = yield request(options);
          let jsonResponce = yield transformToJson(response.body);
 
-        return jsonResponce;
+        return jsonResponce.Result.eGQueryResult.ResultItem;
     }
 
 /*
