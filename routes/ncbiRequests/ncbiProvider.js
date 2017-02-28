@@ -37,6 +37,20 @@ class NCBIProvider {
 
 
     }
+    getResult(jsonObj,resultKey, item){
+
+
+
+        var object = { 'a': [{ 'b': { 'c': 3 } }] };
+
+        _.get(jsonObj, 'a[0].b.c');
+
+
+        return res;
+
+
+    }
+
 /*
  ESearch now provides a supported sort parameter
  EInfo, ESearch and ESummary now provide output data in JSON format
@@ -72,8 +86,9 @@ class NCBIProvider {
 
          let response = yield request(options);
          let jsonResponce = yield transformToJson(response.body);
-
-        return jsonResponce.Result.eGQueryResult.ResultItem;
+       let   res =  _.get(jsonResponce, 'Result.eGQueryResult.ResultItem',[])
+            .filter( (ele) => { return ele.Count != '0';})
+        return res;
     }
 
 /*
