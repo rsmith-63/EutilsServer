@@ -52,6 +52,35 @@ class NCBIProvider {
         return query;
     }
 
+     xfoumCatagoies(jsonResponse) {
+    const _ = require('lodash');
+    const categorySet =  require('../../config/catagoryCofig');
+    let  result = [];
+         let  response = _.cloneDeep(jsonResponse);
+         // get only the array part og response and filter out the items that have no results
+         response =  _.get(response, 'Result.eGQueryResult.ResultItem',[])
+             .filter( (ele) => { return ele.Count != '0';});
+
+         // transform to results for display
+
+    categorySet.forEach((cat, indx, catset) => {
+            let category = {"category": cat.category, "databases": []};
+            cat.dbList.forEach((db) => {
+                response.forEach((ele) => {
+                    if (ele.DbName === db) {
+                        let db = Object.assign({}, ele);
+                        category.databases.push(db);
+                    }
+
+                })
+
+            });
+            result.push(category);
+        }
+    );
+    return result;
+}
+
     /**
      * query API and return the body.
      *  @param queryBody
@@ -71,10 +100,12 @@ class NCBIProvider {
 
 
          let response = yield request(options);
+
          let jsonResponce = yield transformToJson(response.body);
-       let   res =  _.get(jsonResponce, 'Result.eGQueryResult.ResultItem',[])
-            .filter( (ele) => { return ele.Count != '0';})
-        return res;
+
+
+
+        return  this.xfoumCatagoies(jsonResponce);
     }
 
 /*
