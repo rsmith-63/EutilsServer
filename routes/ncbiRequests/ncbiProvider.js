@@ -52,7 +52,7 @@ class NCBIProvider {
         return query;
     }
 
-     xfoumCatagoies(jsonResponse) {
+     xfoumCategories(jsonResponse , selectedDB) {
     const _ = require('lodash');
     const categorySet =  require('../../config/catagoryCofig');
     let  result = [];
@@ -61,9 +61,15 @@ class NCBIProvider {
          response =  _.get(response, 'Result.eGQueryResult.ResultItem',[])
              .filter( (ele) => { return ele.Count != '0';});
 
+         //filter out results if database was selected
+         if(!(_.isNil(selectedDB))){
+             response = response.filter((ele)=>{return ele.DbName == selectedDB;});
+         }
+
+
          // transform to results for display
 
-    categorySet.forEach((cat, indx, catset) => {
+    categorySet.forEach((cat) => {
             let category = {"category": cat.category, "databases": []};
             cat.dbList.forEach((db) => {
                 response.forEach((ele) => {
@@ -75,7 +81,11 @@ class NCBIProvider {
                 })
 
             });
-            result.push(category);
+            // filter out category if no databases
+            if(category.databases.length > 0){
+                result.push(category);
+            }
+
         }
     );
     return result;
@@ -105,7 +115,7 @@ class NCBIProvider {
 
 
 
-        return  this.xfoumCatagoies(jsonResponce);
+        return  this.xfoumCategories(jsonResponce,queryBody.db);
     }
 
 /*
