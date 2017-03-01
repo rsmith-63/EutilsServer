@@ -62,7 +62,7 @@ class NCBIProvider {
              .filter( (ele) => { return ele.Count != '0';});
 
          //filter out results if database was selected
-         if(!(_.isNil(selectedDB))){
+         if(!(_.isNil(selectedDB)) && (selectedDB !== 'All DataBases')){
              response = response.filter((ele)=>{return ele.DbName == selectedDB;});
          }
 
