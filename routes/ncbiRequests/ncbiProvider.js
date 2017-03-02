@@ -52,44 +52,55 @@ class NCBIProvider {
         return query;
     }
 
-     xfoumCategories(jsonResponse , selectedDB) {
-    const _ = require('lodash');
-    const categorySet =  require('../../config/catagoryCofig');
-    let  result = [];
-         let  response = _.cloneDeep(jsonResponse);
-         // get only the array part og response and filter out the items that have no results
-         response =  _.get(response, 'Result.eGQueryResult.ResultItem',[])
-             .filter( (ele) => { return ele.Count != '0';});
+    xfoumCategories(jsonResponse, selectedDB) {
+        const _ = require('lodash');
+        const categorySet = require('../../config/catagoryCofig');
 
-         //filter out results if database was selected
-         if(!(_.isNil(selectedDB)) && (selectedDB !== 'All DataBases')){
-             response = response.filter((ele)=>{return ele.DbName == selectedDB;});
-         }
-
-
-         // transform to results for display
-
-    categorySet.forEach((cat) => {
-            let category = {"category": cat.category, "databases": []};
-            cat.dbList.forEach((db) => {
-                response.forEach((ele) => {
-                    if (ele.DbName === db) {
-                        let db = Object.assign({}, ele);
-                        category.databases.push(db);
-                    }
-
-                })
-
+        let categories = [];
+        let response = _.cloneDeep(jsonResponse);
+        // get only the array part of response and filter out the items that have no results
+        response = _.get(response, 'Result.eGQueryResult.ResultItem', [])
+            .filter((ele) => {
+                return ele.Count != '0';
             });
-            // filter out category if no databases
-            if(category.databases.length > 0){
-                result.push(category);
-            }
 
+        //filter out results if database was selected
+        if (!(_.isNil(selectedDB)) && (selectedDB !== 'All DataBases')) {
+            response = response.filter((ele) => {
+                return ele.DbName == selectedDB;
+            });
         }
-    );
-    return result;
-}
+
+        let result = {
+            searchTerm: `${selectedDB}`,
+            totalFound: `${response.length}`,
+            categories: []
+        };
+
+        // transform to results for display
+
+        categorySet.forEach((cat) => {
+                let category = {"category": cat.category, "databases": []};
+                cat.dbList.forEach((db) => {
+                    response.forEach((ele) => {
+                        if (ele.DbName === db) {
+                            let db = Object.assign({}, ele);
+                            category.databases.push(db);
+                        }
+
+                    })
+
+                });
+                // filter out category if no databases
+                if (category.databases.length > 0) {
+                    categories.push(category);
+                }
+
+            }
+        );
+        result.categories = categories;
+        return result;
+    }
 
     /**
      * query API and return the body.
