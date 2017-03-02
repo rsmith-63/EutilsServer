@@ -52,7 +52,7 @@ class NCBIProvider {
         return query;
     }
 
-    xfoumCategories(jsonResponse, selectedDB) {
+    xfoumCategories(jsonResponse, selectedDB ,searchTerm) {
         const _ = require('lodash');
         const categorySet = require('../../config/catagoryCofig');
 
@@ -72,7 +72,8 @@ class NCBIProvider {
         }
 
         let result = {
-            searchTerm: `${selectedDB}`,
+            searchTerm: `${searchTerm}`,
+            selectedDB:`${selectedDB}`,
             totalFound: `${response.length}`,
             categories: []
         };
@@ -126,7 +127,7 @@ class NCBIProvider {
 
 
 
-        return  this.xfoumCategories(jsonResponce,queryBody.db);
+        return  this.xfoumCategories(jsonResponce,queryBody.db, queryBody.term);
     }
 
 /*
