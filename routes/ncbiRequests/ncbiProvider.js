@@ -140,7 +140,17 @@ class NCBIProvider {
         return  summaryResult;
     }
 
+    *fetch(queryBody) {
 
+
+        let  options = _.cloneDeep(this.options);
+        // search for term in a db and get back the ids
+        let searchResult  =  yield this.esearch(queryBody);
+        let parsedResult = JSON.parse(searchResult);
+        let newQuery = this.buildQueryWithIdsOnly(queryBody.db,parsedResult.esearchresult.idlist, 'esummary');
+        let summaryResult =  yield this.efetch(newQuery);
+        return  summaryResult;
+    }
 /*
  •
  Provides a list of the names of all valid Entrez databases
