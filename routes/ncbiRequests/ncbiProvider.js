@@ -15,24 +15,22 @@ class NCBIProvider {
         assert(this.options.method, 'API method is required.');
     }
 
-    validateReq(options, dbName,searchTerm, ncbiApi) {
+    validateQueryWithIDs( dbName,ids,ncbiApi) {
 
 
-            let msg = 'Invalid arguments supplied to ' + ncbiApi;
-            if (options === undefined) {
-
-                assert(`Invalid arguments supplied to  ${ncbiApi}`);
-            }
         if (dbName === undefined) {
 
             assert(`database name requierd for  ${ncbiApi}`);
         }
 
-        if (searchTerm === undefined) {
+        if (ids === undefined) {
 
             assert(`a search term requierd for  ${ncbiApi}`);
         }
+        if (!Array.isArray(ids)) {
 
+            assert(`an array of id is required ${ncbiApi}`);
+        }
 
 
 
@@ -42,13 +40,12 @@ class NCBIProvider {
  EInfo, ESearch and ESummary now provide output data in JSON format
 
  */
-    buildQuery(options, ignoreList) {
-        let query = '';
-        for (let prop in options) {
-            if (options.hasOwnProperty(prop) && ignoreList.indexOf(prop) == -1) {
-                query += '&' + prop + '=' + options[prop];
-            }
-        }
+    buildQueryWithIdsOnly(db, idlist,ncbiApi) {
+        this.validateQueryWithIDs(db, idlist,ncbiApi);
+        let query = {};
+        query.db = db;
+        query.id = idlist.join()
+
         return query;
     }
 
@@ -129,6 +126,20 @@ class NCBIProvider {
 
         return  this.xfoumCategories(jsonResponce,queryBody.db, queryBody.term);
     }
+
+
+    *summary(queryBody) {
+
+
+        let  options = _.cloneDeep(this.options);
+        // search for term in a db and get back the ids
+        let searchResult  =  yield this.esearch(queryBody);
+        let parsedResult = JSON.parse(searchResult);
+        let newQuery = this.buildQueryWithIdsOnly(queryBody.db,parsedResult.esearchresult.idlist, 'esummary');
+        let summaryResult =  yield this.esummary(newQuery);
+        return  summaryResult;
+    }
+
 
 /*
  •

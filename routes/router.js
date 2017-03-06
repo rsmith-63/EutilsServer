@@ -58,6 +58,19 @@ router.get("/api/query", function *(ctx){
     this.type = "application/json";
 
 });
+router.get("/api/summary", function *(ctx){
+    //https://eutils.ncbi.nlm.nih.gov/entrez/eutils/einfo.fcgi?retmode=json&
+
+    let ncbiReq = new ncbiProvider(requestOptions);
+    let queryString = url.parse(this.url,true);
+    let queryBody = queryString.query;
+    let result =  yield ncbiReq.summary(queryBody);
+
+    this.body = result;
+    this.type = "application/json";
+
+});
+
 /*
  Required Parameters
  db
