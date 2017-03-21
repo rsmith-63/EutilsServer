@@ -10,7 +10,7 @@
 		{
 			"name": "http://LOCALHOST:4000/api/query",
 			"request": {
-				"url": "http://LOCALHOST:4000/api/query?term=polio",
+				"url": "http://LOCALHOST:4000/api/query?term=polio&db=books",
 				"method": "GET",
 				"header": [],
 				"body": {},
@@ -110,6 +110,28 @@
 			"name": "http://LOCALHOST:4000/api/test/ecitmatch",
 			"request": {
 				"url": "http://LOCALHOST:4000/api/test/ecitmatch/db=pubmed&bdata=proc+natl+acad+sci+u+s+a|1991|88|3248|mann+bj|Art1|%0Dscience|1987|235|182|palmenberg+ac|Art2|",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Eutils server tests"
+			},
+			"response": []
+		},
+		{
+			"name": "http://LOCALHOST:4000/api/summary",
+			"request": {
+				"url": "http://LOCALHOST:4000/api/summary?term=polio&db=books",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Eutils server tests"
+			},
+			"response": []
+		},
+		{
+			"name": "http://LOCALHOST:4000/api/fetch",
+			"request": {
+				"url": "http://LOCALHOST:4000/api/fetch?term=polio&db=gene",
 				"method": "GET",
 				"header": [],
 				"body": {},

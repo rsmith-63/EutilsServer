@@ -15,7 +15,7 @@ class NCBIProvider {
         assert(this.options.method, 'API method is required.');
     }
 
-    validateQueryWithIDs( dbName,ids,ncbiApi) {
+    static validateQueryWithIDs(dbName, ids, ncbiApi) {
 
 
         if (dbName === undefined) {
@@ -35,16 +35,22 @@ class NCBIProvider {
 
 
     }
+    *buildQuery(queryBody){
+        let searchResult  =  yield this.esearch(queryBody);
+        let parsedResult = JSON.parse(searchResult);
+        let newQuery = this.buildQueryWithIdsOnly(queryBody.db,parsedResult.esearchresult.idlist, 'esummary');
+        return newQuery;
+    }
 /*
  ESearch now provides a supported sort parameter
  EInfo, ESearch and ESummary now provide output data in JSON format
 
  */
     buildQueryWithIdsOnly(db, idlist,ncbiApi) {
-        this.validateQueryWithIDs(db, idlist,ncbiApi);
+        NCBIProvider.validateQueryWithIDs(db, idlist,ncbiApi);
         let query = {};
         query.db = db;
-        query.id = idlist.join()
+        query.id = idlist.join();
 
         return query;
     }
@@ -133,9 +139,10 @@ class NCBIProvider {
 
         let  options = _.cloneDeep(this.options);
         // search for term in a db and get back the ids
-        let searchResult  =  yield this.esearch(queryBody);
-        let parsedResult = JSON.parse(searchResult);
-        let newQuery = this.buildQueryWithIdsOnly(queryBody.db,parsedResult.esearchresult.idlist, 'esummary');
+        // let searchResult  =  yield this.esearch(queryBody);
+        // let parsedResult = JSON.parse(searchResult);
+        // let newQuery = this.buildQueryWithIdsOnly(queryBody.db,parsedResult.esearchresult.idlist, 'esummary');
+        let newQuery = yield this.buildQuery(queryBody);
         let summaryResult =  yield this.esummary(newQuery);
         return  summaryResult;
     }
@@ -143,13 +150,10 @@ class NCBIProvider {
     *fetch(queryBody) {
 
 
-        let  options = _.cloneDeep(this.options);
-        // search for term in a db and get back the ids
-        let searchResult  =  yield this.esearch(queryBody);
-        let parsedResult = JSON.parse(searchResult);
-        let newQuery = this.buildQueryWithIdsOnly(queryBody.db,parsedResult.esearchresult.idlist, 'esummary');
-        let summaryResult =  yield this.efetch(newQuery);
-        return  summaryResult;
+        let newQuery = yield this.buildQuery(queryBody);
+        let fetchResult =  yield this.efetch(newQuery);
+
+        return  fetchResult;
     }
 /*
  •
